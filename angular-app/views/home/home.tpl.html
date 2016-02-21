@@ -1,0 +1,27 @@
+<div class="md-padding checkboxdemoBasicUsage" ng-cloak="">
+    <div class="padded md-whiteframe-1dp" md-whiteframe="10">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2 class="md-flex">Hello, {{data.user.name}}.</h2>
+        </div>
+    </md-toolbar>
+    <md-content flex layout-padding>
+        <div ng-repeat="question in data.questions">
+            <fieldset class="standard" >
+                <legend>{{question.text}}</legend>
+                <div layout="row" layout-wrap="" layout-gt-sm="row">
+                    <div ng-repeat="answer in question.answers">
+                    <md-button ng-class="['md-raised', {'md-primary': !isSelected(answer.key), 'md-accent': isSelected(answer.key)}]" ng-click="toggle(answer.key)">{{answer.text}}</md-button>
+                    </div>
+
+                </div>
+            </fieldset>
+        </div>
+        <div>
+            <md-button class="md-fab" aria-label="Eat cake" ng-click="save()">
+                <md-icon md-svg-src="img/ic_send_white_24px.svg"></md-icon>
+            </md-button>
+        </div>
+    </md-content>
+    </div>
+</div>
