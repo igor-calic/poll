@@ -10,6 +10,7 @@
         $scope.data.cb3 = false;
         $scope.data.cb4 = false;
         $scope.data.cb5 = false;
+        $scope.data.submitDisabled = true;
 
         $scope.data.answers = []
 
@@ -48,13 +49,19 @@
                         $scope.data.answers.push(answers[i].key.urlsafe)
                     }
                 }
+                $scope.data.submitDisabled = false;
+
             });
         }
 
         var save = function() {
+            $scope.data.submitDisabled = true;
             var userAnswers = new HomeService.UserAnswers({userId:currentUser.key});
             userAnswers.answers = $scope.data.answers;
-            userAnswers.$save()
+            var answer = userAnswers.$save(function() {
+                console.log('answer=', answer)
+                $scope.data.submitDisabled = false;
+            })
         }
 
         $scope.save = save;

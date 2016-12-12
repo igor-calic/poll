@@ -9,6 +9,9 @@ from ferris.core import messages
 class UserAnswer(BasicModel):
     answers = ndb.KeyProperty(repeated=True)
 
+    def answers_only(self):
+        return ndb.get_multi(self.answers)
+
     @classmethod
     def create_or_update(cls, user_key, urlsafe_answers):
         user_answer = UserAnswer.query(ancestor=user_key).get()
@@ -16,7 +19,7 @@ class UserAnswer(BasicModel):
             user_answer = UserAnswer(parent=user_key)
         answers = [ndb.Key(urlsafe=x) for x in urlsafe_answers]
         user_answer.answers = answers
-        user_answer.put()
+        return user_answer.put()
 
     @classmethod
     def by_user(cls, user_key):

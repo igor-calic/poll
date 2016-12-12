@@ -23,9 +23,8 @@ class UserAnswers(Controller):
             body = json.loads(self.request.body)
             logging.info('user {0}'.format(user.name))
             logging.info('answers:{0}'.format(body['answers']))
-            UserAnswer.create_or_update(user.key, urlsafe_answers=body['answers'])
-
-            return 200
+            user_answer = UserAnswer.create_or_update(user.key, urlsafe_answers=body['answers'])
+            self.context['data'] = user_answer.get().answers_only()
         else:
             return 404
 
